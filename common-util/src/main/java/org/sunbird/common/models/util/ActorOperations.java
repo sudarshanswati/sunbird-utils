@@ -9,65 +9,75 @@ package org.sunbird.common.models.util;
 
 public enum ActorOperations {
    
-    ENROLL_COURSE("enrollCourse"), GET_COURSE("getCourse"), ADD_CONTENT("addContent"),
-    GET_CONTENT("getContent"), CREATE_COURSE("createCourse"), UPDATE_COURSE("updateCourse"),
-    PUBLISH_COURSE("publishCourse"), SEARCH_COURSE("searchCourse"), DELETE_COURSE("deleteCourse"),
-    CREATE_USER("createUser"), UPDATE_USER("updateUser"), LOGIN("login"), LOGOUT("logout"),
-    CHANGE_PASSWORD("changePassword"), USER_AUTH("userAuth"), GET_PROFILE("getUserProfile"),
-    CREATE_ORG("createOrg"), UPDATE_ORG("updateOrg"), UPDATE_ORG_STATUS("updateOrgStatus"),
-    GET_ORG_DETAILS("getOrgDetails"), APPROVE_ORG("approveOrg"), 
-    CREATE_PAGE("createPage"),UPDATE_PAGE("updatePage"), DELETE_PAGE("deletePage"), 
-    GET_PAGE_SETTINGS("getPageSettings"), GET_PAGE_SETTING("getPageSetting"), 
-    GET_PAGE_DATA("getPageData"),
-    CREATE_SECTION("createSection"), UPDATE_SECTION("updateSection"),
-    GET_ALL_SECTION("getAllSection"), GET_SECTION("getSection"),
-    GET_COURSE_BY_ID("getCourseById"), UPDATE_USER_COUNT("updateUserCount"),
-    SAVE_ASSESSMENT("saveAssessment"), GET_ASSESSMENT("getAssessment"),
-    GET_RECOMMENDED_COURSES("getRecommendedCourses"),
-    UPDATE_USER_INFO_ELASTIC("updateUserInfoToElastic"),GET_ROLES("getRoles"),
-	APPROVE_ORGANISATION("approveOrganisation"), JOIN_USER_ORGANISATION("joinUserOrganisation"),
-	ADD_MEMBER_ORGANISATION("addMemberOrganisation"), REMOVE_MEMBER_ORGANISATION("removeMemberOrganisation"),
-	APPROVE_USER_ORGANISATION("approveUserOrganisation"),COMPOSITE_SEARCH("compositeSearch"),
-	GET_USER_DETAILS_BY_LOGINID("getUserDetailsByLoginId"),UPDATE_ORG_INFO_ELASTIC("updateOrgInfoToElastic"),
-    REJECT_USER_ORGANISATION("rejectUserOrganisation"),INSERT_ORG_INFO_ELASTIC("insertOrgInfoToElastic"),
-    DOWNLOAD_USERS("downloadUsersData"),DOWNLOAD_ORGS("downlaodOrg"),BLOCK_USER("blockUser")
-    ,DELETE_BY_IDENTIFIER("deleteByIdentifier"),
-    BULK_UPLOAD("bulkUpload"),PROCESS_BULK_UPLOAD("processBulkUpload"),ASSIGN_ROLES("assignRoles"), UNBLOCK_USER("unblockUser"),
-    CREATE_BATCH("createBatch"),UPDATE_BATCH("updateBatch"),REMOVE_BATCH("removeBatch"),ADD_USER_TO_BATCH("addUserBatch"),
-    REMOVE_USER_FROM_BATCH("removeUserFromBatch"),GET_BATCH("getBatch"),INSERT_COURSE_BATCH_ES("insertCourseBatchToEs"),
-    UPDATE_COURSE_BATCH_ES("updateCourseBatchToEs"),GET_BULK_OP_STATUS("getBulkOpStatus"),
-    ORG_CREATION_METRICS("orgCreationMetrics"),ORG_CONSUMPTION_METRICS("orgConsumptionMetrics"),
-    ORG_CREATION_METRICS_DATA("orgCreationMetricsData"), 
-    ORG_CONSUMPTION_METRICS_DATA("orgConsumptionMetricsData"),
-    COURSE_PROGRESS_METRICS("courseProgressMetrics"), COURSE_CREATION_METRICS("courseConsumptionMetrics"), 
-    USER_CREATION_METRICS("userCreationMetrics"), USER_CONSUMPTION_METRICS("userConsumptionMetrics"),
-    GET_COURSE_BATCH_DETAIL("getCourseBatchDetail"),UPDATE_USER_ORG_ES("updateUserOrgES"),
-    REMOVE_USER_ORG_ES("removeUserOrgES"),UPDATE_USER_ROLES_ES("updateUserRoles"),
-    SYNC("sync"),INSERT_USR_COURSES_INFO_ELASTIC("insertUserCoursesInfoToElastic"),
-    UPDATE_USR_COURSES_INFO_ELASTIC("updateUserCoursesInfoToElastic"),SCHEDULE_BULK_UPLOAD("scheduleBulkUpload"),
-    COURSE_PROGRESS_METRICS_REPORT("courseProgressMetricsReport"), COURSE_CREATION_METRICS_REPORT("courseConsumptionMetricsReport"),
-    ORG_CREATION_METRICS_REPORT("orgCreationMetricsReport"),ORG_CONSUMPTION_METRICS_REPORT("orgConsumptionMetricsReport"),
-    EMAIL_SERVICE("emailService"),FILE_STORAGE_SERVICE("fileStorageService"),GET_ALL_BADGE("getAllBadge"),ADD_USER_BADGE("addUserBadge"),
-    ADD_USER_BADGE_BKG("addUserBadgebackground"),FILE_GENERATION_AND_UPLOAD("fileGenerationAndUpload"),HEALTH_CHECK("healthCheck"),
-    SEND_MAIL("sendMail"), PROCESS_DATA("processData"), ACTOR("actor"),CASSANDRA("cassandra"),ES("es"),EKSTEP("ekstep"),
-    COURSE_PROGRESS_METRICS_DATA("courseProgressMetricsData"),GET_ORG_TYPE_LIST("getOrgTypeList"),CREATE_ORG_TYPE("createOrgType"),
-    UPDATE_ORG_TYPE("updateOrgType"), CREATE_NOTE("createNote"), UPDATE_NOTE("updateNote"),
-    SEARCH_NOTE("searchNote"), GET_NOTE("getNote"), DELETE_NOTE("deleteNote"),
-    INSERT_USER_NOTES_ES("insertUserNotesToElastic"),ENCRYPT_USER_DATA("encryptUserData"),DECRYPT_USER_DATA("decryptUserData"), 
-    UPDATE_USER_NOTES_ES("updateUserNotesToElastic"),USER_CURRENT_LOGIN("userCurrentLogin"), GET_MEDIA_TYPES("getMediaTypes"),
-    SEARCH_AUDIT_LOG("searchAuditLog"), PROCESS_AUDIT_LOG("processAuditLog"),FORGOT_PASSWORD("forgotpassword"),
-    ADD_SKILL("addSkill"), GET_SKILL("getSkill") , GET_SKILLS_LIST("getSkillsList");
+    ENROLL_COURSE("CourseEnrollmentActor","enrollCourse"), GET_COURSE("LearnerStateActor","getCourse"), ADD_CONTENT("LearnerStateUpdateActor","addContent"),
+    GET_CONTENT("LearnerStateActor","getContent"), CREATE_COURSE("CourseManagementActor","createCourse"), UPDATE_COURSE("CourseManagementActor","updateCourse"),
+    PUBLISH_COURSE("CourseManagementActor","publishCourse"), SEARCH_COURSE("CourseManagementActor","searchCourse"), DELETE_COURSE("CourseManagementActor","deleteCourse"),
+    CREATE_USER("UserManagementActor","createUser"), UPDATE_USER("UserManagementActor","updateUser"), LOGIN("UserManagementActor","login"), LOGOUT("UserManagementActor","logout"),
+    CHANGE_PASSWORD("UserManagementActor","changePassword"), USER_AUTH("","userAuth"), GET_PROFILE("UserManagementActor","getUserProfile"),
+    CREATE_ORG("OrganisationManagementActor","createOrg"), UPDATE_ORG("OrganisationManagementActor","updateOrg"), UPDATE_ORG_STATUS("OrganisationManagementActor","updateOrgStatus"),
+    GET_ORG_DETAILS("OrganisationManagementActor","getOrgDetails"), APPROVE_ORG("OrganisationManagementActor","approveOrg"), 
+    CREATE_PAGE("PageManagementActor","createPage"),UPDATE_PAGE("PageManagementActor","updatePage"), DELETE_PAGE("","deletePage"), 
+    GET_PAGE_SETTINGS("PageManagementActor","getPageSettings"), GET_PAGE_SETTING("PageManagementActor","getPageSetting"), 
+    GET_PAGE_DATA("PageManagementActor","getPageData"),
+    CREATE_SECTION("PageManagementActor","createSection"), UPDATE_SECTION("PageManagementActor","updateSection"),
+    GET_ALL_SECTION("PageManagementActor","getAllSection"), GET_SECTION("PageManagementActor","getSection"),
+    GET_COURSE_BY_ID("CourseManagementActor","getCourseById"), UPDATE_USER_COUNT("BackgroundJobManager","updateUserCount"),
+    SAVE_ASSESSMENT("AssessmentItemActor","saveAssessment"), GET_ASSESSMENT("AssessmentItemActor","getAssessment"),
+    GET_RECOMMENDED_COURSES("CourseManagementActor","getRecommendedCourses"),
+    UPDATE_USER_INFO_ELASTIC("BackgroundJobManager","updateUserInfoToElastic"),GET_ROLES("UserManagementActor","getRoles"),
+    APPROVE_ORGANISATION("OrganisationManagementActor","approveOrganisation"), JOIN_USER_ORGANISATION("OrganisationManagementActor","joinUserOrganisation"),
+    ADD_MEMBER_ORGANISATION("OrganisationManagementActor","addMemberOrganisation"), REMOVE_MEMBER_ORGANISATION("OrganisationManagementActor","removeMemberOrganisation"),
+    APPROVE_USER_ORGANISATION("OrganisationManagementActor","approveUserOrganisation"),COMPOSITE_SEARCH("SearchHandlerActor","compositeSearch"),
+    GET_USER_DETAILS_BY_LOGINID("UserManagementActor","getUserDetailsByLoginId"),UPDATE_ORG_INFO_ELASTIC("BackgroundJobManager","updateOrgInfoToElastic"),
+    REJECT_USER_ORGANISATION("OrganisationManagementActor","rejectUserOrganisation"),INSERT_ORG_INFO_ELASTIC("BackgroundJobManager","insertOrgInfoToElastic"),
+    DOWNLOAD_USERS("UserManagementActor","downloadUsersData"),DOWNLOAD_ORGS("OrganisationManagementActor","downlaodOrg"),BLOCK_USER("UserManagementActor","blockUser")
+    ,DELETE_BY_IDENTIFIER("","deleteByIdentifier"),
+    BULK_UPLOAD("BulkUploadManagementActor","bulkUpload"),PROCESS_BULK_UPLOAD("BulkUploadBackGroundJobActor","processBulkUpload"),ASSIGN_ROLES("UserManagementActor","assignRoles"), UNBLOCK_USER("UserManagementActor","unblockUser"),
+    CREATE_BATCH("CourseBatchManagementActor","createBatch"),UPDATE_BATCH("CourseBatchManagementActor","updateBatch"),REMOVE_BATCH("CourseBatchManagementActor","removeBatch"),ADD_USER_TO_BATCH("CourseBatchManagementActor","addUserBatch"),
+    REMOVE_USER_FROM_BATCH("CourseBatchManagementActor","removeUserFromBatch"),GET_BATCH("CourseBatchManagementActor","getBatch"),INSERT_COURSE_BATCH_ES("BackgroundJobManager","insertCourseBatchToEs"),
+    UPDATE_COURSE_BATCH_ES("BackgroundJobManager","updateCourseBatchToEs"),GET_BULK_OP_STATUS("BulkUploadManagementActor","getBulkOpStatus"),
+    ORG_CREATION_METRICS("OrganisationMetricsActor","orgCreationMetrics"),ORG_CONSUMPTION_METRICS("OrganisationMetricsActor","orgConsumptionMetrics"),
+    ORG_CREATION_METRICS_DATA("OrganisationMetricsActor","orgCreationMetricsData"), 
+    ORG_CONSUMPTION_METRICS_DATA("OrganisationMetricsActor","orgConsumptionMetricsData"),
+    COURSE_PROGRESS_METRICS("CourseMetricsActor","courseProgressMetrics"), COURSE_CREATION_METRICS("CourseMetricsActor","courseConsumptionMetrics"), 
+    USER_CREATION_METRICS("UserMetricsActor","userCreationMetrics"), USER_CONSUMPTION_METRICS("UserMetricsActor","userConsumptionMetrics"),
+    GET_COURSE_BATCH_DETAIL("CourseBatchManagementActor","getCourseBatchDetail"),UPDATE_USER_ORG_ES("BackgroundJobManager","updateUserOrgES"),
+    REMOVE_USER_ORG_ES("BackgroundJobManager","removeUserOrgES"),UPDATE_USER_ROLES_ES("BackgroundJobManager","updateUserRoles"),
+    SYNC("EsSyncActor","sync"),INSERT_USR_COURSES_INFO_ELASTIC("BackgroundJobManager","insertUserCoursesInfoToElastic"),
+    UPDATE_USR_COURSES_INFO_ELASTIC("BackgroundJobManager","updateUserCoursesInfoToElastic"),SCHEDULE_BULK_UPLOAD("SchedularActor","scheduleBulkUpload"),
+    COURSE_PROGRESS_METRICS_REPORT("CourseMetricsActor","courseProgressMetricsReport"), COURSE_CREATION_METRICS_REPORT("CourseMetricsActor","courseConsumptionMetricsReport"),
+    ORG_CREATION_METRICS_REPORT("OrganisationMetricsActor","orgCreationMetricsReport"),ORG_CONSUMPTION_METRICS_REPORT("OrganisationMetricsActor","orgConsumptionMetricsReport"),
+    EMAIL_SERVICE("EmailServiceActor","emailService"),FILE_STORAGE_SERVICE("FileUploadServiceActor","fileStorageService"),GET_ALL_BADGE("BadgesActor","getAllBadge"),ADD_USER_BADGE("BadgesActor","addUserBadge"),
+    ADD_USER_BADGE_BKG("BackgroundJobManager","addUserBadgebackground"),FILE_GENERATION_AND_UPLOAD("MetricsBackGroundJobActor","fileGenerationAndUpload"),HEALTH_CHECK("BadgesActor","healthCheck"),
+    SEND_MAIL("MetricsBackGroundJobActor","sendMail"), PROCESS_DATA("MetricsBackGroundJobActor","processData"), ACTOR("BadgesActor","actor"),CASSANDRA("BadgesActor","cassandra"),ES("BadgesActor","es"),EKSTEP("","ekstep"),
+    COURSE_PROGRESS_METRICS_DATA("CourseMetricsActor","courseProgressMetricsData"),GET_ORG_TYPE_LIST("OrganisationMetricsActor","getOrgTypeList"),CREATE_ORG_TYPE("OrganisationMetricsActor","createOrgType"),
+    UPDATE_ORG_TYPE("OrganisationManagementActor","updateOrgType"), CREATE_NOTE("NotesManagementActor","createNote"), UPDATE_NOTE("NotesManagementActor","updateNote"),
+    SEARCH_NOTE("NotesManagementActor","searchNote"), GET_NOTE("NotesManagementActor","getNote"), DELETE_NOTE("NotesManagementActor","deleteNote"),
+    INSERT_USER_NOTES_ES("BackgroundJobManager","insertUserNotesToElastic"),ENCRYPT_USER_DATA("UserDataEncryptionDecryptionServiceActor","encryptUserData"),DECRYPT_USER_DATA("UserDataEncryptionDecryptionServiceActor","decryptUserData"), 
+    UPDATE_USER_NOTES_ES("BackgroundJobManager","updateUserNotesToElastic"),USER_CURRENT_LOGIN("UserManagementActor","userCurrentLogin"), GET_MEDIA_TYPES("UserManagementActor","getMediaTypes"),
+    SEARCH_AUDIT_LOG("ActorAuditLogServiceImpl","searchAuditLog"), PROCESS_AUDIT_LOG("ActorAuditLogServiceImpl","processAuditLog"),FORGOT_PASSWORD("UserManagementActor","forgotpassword"),
+    ADD_SKILL("","addSkill"), GET_SKILL("","getSkill") , GET_SKILLS_LIST("","getSkillsList");
 
+    private String key;
     private String value;
 
     /**
      * constructor
      * @param value String
      */
-    ActorOperations(String value){
-        this.value=value;
+    ActorOperations(String key, String value){
+        this.key = key;
+        this.value = value;
     }
 
+    /**
+     * returns the Enum key
+     * @return String
+     */
+    public String getKey(){
+        return this.key;
+    }
+    
     /**
      * returns the enum value
      * @return String
