@@ -14,12 +14,13 @@ import org.sunbird.common.exception.ProjectCommonException;
 import org.sunbird.common.models.response.Response;
 import org.sunbird.common.models.util.ActorOperations;
 import org.sunbird.common.models.util.JsonKey;
-import org.sunbird.common.models.util.LoggerEnum;
 import org.sunbird.common.models.util.ProjectLogger;
 import org.sunbird.common.request.Request;
 import org.sunbird.common.responsecode.ResponseCode;
 import org.sunbird.learner.util.AuditLogActions;
 import org.sunbird.learner.util.AuditOperation;
+import org.sunbird.telemetry.util.PerformanceLogger;
+
 import scala.concurrent.ExecutionContext;
 import scala.concurrent.Future;
 import scala.concurrent.duration.Duration;
@@ -51,6 +52,7 @@ public class RequestRouter extends BaseRouter {
 	@Override
 	public void route(Request request) throws Throwable {
 		org.sunbird.common.request.ExecutionContext.setRequestId(request.getRequestId());
+		request.getContext().put("startTime", System.currentTimeMillis());
 		String operation = request.getOperation();
 		ActorRef ref = routingMap.get(getKey(self().path().name(), operation));
 		if (null != ref) {
@@ -84,16 +86,23 @@ public class RequestRouter extends BaseRouter {
 	 * @return boolean
 	 */
 	private boolean route(ActorRef router, Request message, ExecutionContext ec) {
-		long startTime = System.currentTimeMillis();
-		ProjectLogger.log("Actor Service Call start  for  api ==" + message.getOperation() + " start time " + startTime,
-				LoggerEnum.PERF_LOG);
 		Timeout timeout = new Timeout(Duration.create(WAIT_TIME_VALUE, TimeUnit.SECONDS));
 		Future<Object> future = Patterns.ask(router, message, timeout);
 		ActorRef parent = sender();
 		future.onComplete(new OnComplete<Object>() {
 			@Override
 			public void onComplete(Throwable failure, Object result) {
+				long startTime = (long) message.getContext().get("startTime");
+				String requestId = (String) message.getContext().get(JsonKey.MESSAGE_ID);
+				if (StringUtils.isBlank(requestId))
+					requestId = "NA";
+				String className = RequestRouter.class.getCanonicalName();
+				String action = message.getOperation();
+				String scenario = "NA"; 
+				if (StringUtils.isNotBlank((String) message.getContext().get("x-scenario-id"))) 
+						scenario = (String) message.getContext().get("x-scenario-id");
 				if (failure != null) {
+					PerformanceLogger.log(System.currentTimeMillis() - startTime, action, className, requestId, "500", scenario);
 					// We got a failure, handle it here
 					ProjectLogger.log(failure.getMessage(), failure);
 					if (failure instanceof ProjectCommonException) {
@@ -111,6 +120,7 @@ public class RequestRouter extends BaseRouter {
 						parent.tell(exception, self());
 					}
 				} else {
+					PerformanceLogger.log(System.currentTimeMillis() - startTime, action, className, requestId, "200", scenario);
 					parent.tell(result, self());
 					// Audit log method call
 					if (result instanceof Response
