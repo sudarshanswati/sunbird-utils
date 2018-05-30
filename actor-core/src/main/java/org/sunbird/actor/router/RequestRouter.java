@@ -99,8 +99,8 @@ public class RequestRouter extends BaseRouter {
 				String className = RequestRouter.class.getCanonicalName();
 				String action = message.getOperation();
 				String scenario = "NA"; 
-				if (StringUtils.isNotBlank((String) message.getContext().get("x-scenario-id"))) 
-						scenario = (String) message.getContext().get("x-scenario-id");
+				if (StringUtils.isNotBlank((String) message.getContext().get(JsonKey.SCENARIO_ID))) 
+						scenario = (String) message.getContext().get(JsonKey.SCENARIO_ID);
 				if (failure != null) {
 					PerformanceLogger.log(System.currentTimeMillis() - startTime, action, className, requestId, "500", scenario);
 					// We got a failure, handle it here

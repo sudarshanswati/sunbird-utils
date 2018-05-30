@@ -330,6 +330,7 @@ public final class JsonKey {
   public static final String MESSAGE = "message";
   public static final String MESSAGE_Id = "message_id";
   public static final String MESSAGE_ID = "X-msgId";
+  public static final String SCENARIO_ID = "X-Scenario-Id";
   public static final String METHOD = "method";
   public static final String METHOD_NAME = "methodName";
   public static final String METRICS = "metrics";
