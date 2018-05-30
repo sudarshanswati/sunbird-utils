@@ -18,9 +18,9 @@ public class PerformanceLogger {
         if (perfLogger.isInfoEnabled()) {
 
             String msg = "{\"eid\": \"LOG\", \"ets\":" + System.currentTimeMillis()
-                    + ", \"ver\": \"3.0\", \"mid\": " + "PERFLOG."+ UUID.randomUUID()
+                    + ", \"ver\": \"3.0\", \"mid\": " + "\"PERFLOG."+ UUID.randomUUID() + "\""
                     + ", \"actor\": { \"id\": \"org.sunbird.learning.service\", \"type\": \"system\"}, \"context\": { \"channel\": \"NA\""
-                    + " \"pdata\": { \"id\": \"org.sunbird.learning.service\", \"ver\": \"1.7.0\" }, \"env\": \"learner\" }, \"edata\": {\"type\": \"perf_log\", \"level\": \"INFO\",\"message\": \"\", \"params\":["
+                    + ", \"pdata\": { \"id\": \"org.sunbird.learning.service\", \"ver\": \"1.7.0\" }, \"env\": \"learner\" }, \"edata\": {\"type\": \"perf_log\", \"level\": \"INFO\",\"message\": \"\", \"params\":["
                     + "{\"duration\": " + duration + "},"
                     + "{ \"action\": \"" + action + "\"},"
                     + "{ \"class\": \"" + className + "\"},"
