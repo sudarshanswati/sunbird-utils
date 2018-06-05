@@ -28,26 +28,26 @@ import scala.concurrent.duration.Duration;
 /** @author Mahesh Kumar Gangula */
 public class RequestRouter extends BaseRouter {
 
-	private static String mode;
-	private static String name;
-	private static final int WAIT_TIME_VALUE = 9;
-	public static Map<String, ActorRef> routingMap = new HashMap<>();
+  private static String mode;
+  private static String name;
+  private static final int WAIT_TIME_VALUE = 9;
+  public static Map<String, ActorRef> routingMap = new HashMap<>();
 
-	public RequestRouter() {
-		getMode();
-	}
+  public RequestRouter() {
+    getMode();
+  }
 
-	@Override
-	public void preStart() throws Exception {
-		super.preStart();
-		name = self().path().name();
-		initActors(getContext(), RequestRouter.class.getSimpleName());
-	}
+  @Override
+  public void preStart() throws Exception {
+    super.preStart();
+    name = self().path().name();
+    initActors(getContext(), RequestRouter.class.getSimpleName());
+  }
 
-	@Override
-	protected void cacheActor(String key, ActorRef actor) {
-		routingMap.put(key, actor);
-	}
+  @Override
+  protected void cacheActor(String key, ActorRef actor) {
+    routingMap.put(key, actor);
+  }
 
 	@Override
 	public void route(Request request) throws Throwable {
@@ -62,20 +62,20 @@ public class RequestRouter extends BaseRouter {
 		}
 	}
 
-	public static ActorRef getActor(String operation) {
-		return routingMap.get(getKey(name, operation));
-	}
+  public static ActorRef getActor(String operation) {
+    return routingMap.get(getKey(name, operation));
+  }
 
-	public String getRouterMode() {
-		return getMode();
-	}
+  public String getRouterMode() {
+    return getMode();
+  }
 
-	public static String getMode() {
-		if (StringUtils.isBlank(mode)) {
-			mode = getPropertyValue(JsonKey.API_ACTOR_PROVIDER);
-		}
-		return mode;
-	}
+  public static String getMode() {
+    if (StringUtils.isBlank(mode)) {
+      mode = getPropertyValue(JsonKey.API_ACTOR_PROVIDER);
+    }
+    return mode;
+  }
 
 	/**
 	 * method will route the message to corresponding router pass into the argument

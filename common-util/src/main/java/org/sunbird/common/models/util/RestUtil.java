@@ -29,11 +29,11 @@ public class RestUtil {
   }
 
   public static HttpResponse<JsonNode> execute(BaseRequest request) throws Exception {
-    ProjectLogger.log("request url: " + request.getHttpRequest().getUrl());
+    ProjectLogger.log("RestUtil:execute: request url = " + request.getHttpRequest().getUrl());
     Body body = request.getHttpRequest().getBody();
     if ((body != null) && (body instanceof RequestBodyEntity)) {
       RequestBodyEntity rbody = (RequestBodyEntity) body;
-      ProjectLogger.log("request body:" + rbody.getBody());
+      ProjectLogger.log("RestUtil:execute: request body = " + rbody.getBody());
     }
 
     HttpResponse<JsonNode> response = request.asJson();
@@ -59,8 +59,8 @@ public class RestUtil {
 
   public static boolean isSuccessful(HttpResponse<JsonNode> resp) throws Exception {
     int status = resp.getStatus();
-//    String code = resp.getBody().getObject().getString("responseCode");
-//    return ((status == 200) && (code.equals("OK")));
+    //    String code = resp.getBody().getObject().getString("responseCode");
+    //    return ((status == 200) && (code.equals("OK")));
     return (status == 200);
   }
 }
