@@ -29,50 +29,51 @@ public class DefaultDecryptionServiceImpl implements DecryptionService {
 
   @Override
   public Map<String, Object> decryptData(Map<String, Object> data) {
-    if (JsonKey.ON.equalsIgnoreCase(sunbirdEncryption)) {
-      if (data == null) {
-        return data;
-      }
-      Iterator<Entry<String, Object>> itr = data.entrySet().iterator();
-      while (itr.hasNext()) {
-        Entry<String, Object> entry = itr.next();
-        if (!(entry.getValue() instanceof Map || entry.getValue() instanceof List)
-            && null != entry.getValue()) {
-          data.put(entry.getKey(), decrypt(entry.getValue() + ""));
-        }
-      }
-    }
+//    if (JsonKey.ON.equalsIgnoreCase(sunbirdEncryption)) {
+//      if (data == null) {
+//        return data;
+//      }
+//      Iterator<Entry<String, Object>> itr = data.entrySet().iterator();
+//      while (itr.hasNext()) {
+//        Entry<String, Object> entry = itr.next();
+//        if (!(entry.getValue() instanceof Map || entry.getValue() instanceof List)
+//            && null != entry.getValue()) {
+//          data.put(entry.getKey(), decrypt(entry.getValue() + ""));
+//        }
+//      }
+//    }
     return data;
   }
 
   @Override
   public List<Map<String, Object>> decryptData(List<Map<String, Object>> data) {
-    if (JsonKey.ON.equalsIgnoreCase(sunbirdEncryption)) {
-      if (data == null || data.isEmpty()) {
-        return data;
-      }
-
-      for (Map<String, Object> map : data) {
-        decryptData(map);
-      }
-    }
+//    if (JsonKey.ON.equalsIgnoreCase(sunbirdEncryption)) {
+//      if (data == null || data.isEmpty()) {
+//        return data;
+//      }
+//
+//      for (Map<String, Object> map : data) {
+//        decryptData(map);
+//      }
+//    }
     return data;
   }
 
   @Override
   public String decryptData(String data) {
-    if (JsonKey.ON.equalsIgnoreCase(sunbirdEncryption)) {
-      if (StringUtils.isBlank(data)) {
-        return data;
-      }
-      if (null != data) {
-        return decrypt(data);
-      } else {
-        return data;
-      }
-    } else {
-      return data;
-    }
+//    if (JsonKey.ON.equalsIgnoreCase(sunbirdEncryption)) {
+//      if (StringUtils.isBlank(data)) {
+//        return data;
+//      }
+//      if (null != data) {
+//        return decrypt(data);
+//      } else {
+//        return data;
+//      }
+//    } else {
+//      return data;
+//    }
+    return data;
   }
 
   /**
@@ -82,24 +83,24 @@ public class DefaultDecryptionServiceImpl implements DecryptionService {
    * @return decrypted password.
    */
   public static String decrypt(String value) {
-    try {
-      sunbird_encryption = DefaultEncryptionServivceImpl.getSalt();
-      Key key = generateKey();
-      Cipher c = Cipher.getInstance(ALGORITHM);
-      c.init(Cipher.DECRYPT_MODE, key);
-
-      String dValue = null;
-      String valueToDecrypt = value.trim();
-      for (int i = 0; i < ITERATIONS; i++) {
-        byte[] decordedValue = new sun.misc.BASE64Decoder().decodeBuffer(valueToDecrypt);
-        byte[] decValue = c.doFinal(decordedValue);
-        dValue = new String(decValue).substring(sunbird_encryption.length());
-        valueToDecrypt = dValue;
-      }
-      return dValue;
-    } catch (Exception ex) {
-      ProjectLogger.log("Exception Occurred while decrypting value");
-    }
+//    try {
+//      sunbird_encryption = DefaultEncryptionServivceImpl.getSalt();
+//      Key key = generateKey();
+//      Cipher c = Cipher.getInstance(ALGORITHM);
+//      c.init(Cipher.DECRYPT_MODE, key);
+//
+//      String dValue = null;
+//      String valueToDecrypt = value.trim();
+//      for (int i = 0; i < ITERATIONS; i++) {
+//        byte[] decordedValue = new sun.misc.BASE64Decoder().decodeBuffer(valueToDecrypt);
+//        byte[] decValue = c.doFinal(decordedValue);
+//        dValue = new String(decValue).substring(sunbird_encryption.length());
+//        valueToDecrypt = dValue;
+//      }
+//      return dValue;
+//    } catch (Exception ex) {
+//      ProjectLogger.log("Exception Occurred while decrypting value");
+//    }
     return value;
   }
 
