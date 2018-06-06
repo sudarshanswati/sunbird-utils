@@ -1,21 +1,38 @@
 /** */
 package org.sunbird.common.models.util.datasecurity.impl;
 
+import java.security.Key;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.apache.commons.codec.binary.Base64;
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.lang3.StringUtils;
 import org.sunbird.common.models.util.JsonKey;
+import org.sunbird.common.models.util.ProjectLogger;
 import org.sunbird.common.models.util.PropertiesCache;
 import org.sunbird.common.models.util.datasecurity.DecryptionService;
 
 /** @author Manzarul */
 public class DefaultDecryptionServiceImpl implements DecryptionService {
+  private static String sunbird_encryption = "";
 
   private String sunbirdEncryption = "";
+  
+  private static Cipher c = null;
+  
+  static {
+	  sunbird_encryption = DefaultEncryptionServivceImpl.getSalt();
+      Key key = generateKey();
+	    try {
+	    	Cipher c = Cipher.getInstance(ALGORITHM);
+	        c.init(Cipher.DECRYPT_MODE, key);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+  }
 
   public DefaultDecryptionServiceImpl() {
     sunbirdEncryption = System.getenv(JsonKey.SUNBIRD_ENCRYPTION);
@@ -61,11 +78,15 @@ public class DefaultDecryptionServiceImpl implements DecryptionService {
     if (JsonKey.ON.equalsIgnoreCase(sunbirdEncryption)) {
       if (StringUtils.isBlank(data)) {
         return data;
-      } else {
-    	  	return decrypt(data);
       }
+      if (null != data) {
+        return decrypt(data);
+      } else {
+        return data;
+      }
+    } else {
+      return data;
     }
-    return data;
   }
 
   /**
@@ -75,8 +96,25 @@ public class DefaultDecryptionServiceImpl implements DecryptionService {
    * @return decrypted password.
    */
   public static String decrypt(String value) {
-	  byte[] bytes = value.getBytes();
-	  byte[] array = Base64.decodeBase64(bytes);
-	  return new String(array);
+	  if (null != c) {
+		  try {
+		      String dValue = null;
+		      String valueToDecrypt = value.trim();
+		      for (int i = 0; i < ITERATIONS; i++) {
+		        byte[] decordedValue = new sun.misc.BASE64Decoder().decodeBuffer(valueToDecrypt);
+		        byte[] decValue = c.doFinal(decordedValue);
+		        dValue = new String(decValue).substring(sunbird_encryption.length());
+		        valueToDecrypt = dValue;
+		      }
+		      return dValue;
+		    } catch (Exception ex) {
+		      ProjectLogger.log("Exception Occurred while decrypting value");
+		    }
+	  }
+    return value;
+  }
+
+  private static Key generateKey() {
+    return new SecretKeySpec(keyValue, ALGORITHM);
   }
 }
