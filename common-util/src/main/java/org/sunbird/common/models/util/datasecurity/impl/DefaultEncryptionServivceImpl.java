@@ -33,20 +33,19 @@ public class DefaultEncryptionServivceImpl implements EncryptionService {
 
   private String sunbirdEncryption = "";
   
-  private static Cipher c = null;
+  private static Cipher c;
   
   static {
-	  encryption_key = getSalt();
-	    Key key = generateKey();
-	    try {
-			c = Cipher.getInstance(ALGORITHM);
-			c.init(Cipher.ENCRYPT_MODE, key);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	  try {
+		  encryption_key = getSalt();
+		  Key key = generateKey();
+		  c = Cipher.getInstance(ALGORITHM);
+		  c.init(Cipher.ENCRYPT_MODE, key);
+	  } catch (Exception e) {
+		  ProjectLogger.log(e.getMessage(), e);
+	  }
   }
-  
+
   public DefaultEncryptionServivceImpl() {
     sunbirdEncryption = System.getenv(JsonKey.SUNBIRD_ENCRYPTION);
     if (StringUtils.isBlank(sunbirdEncryption)) {
@@ -117,16 +116,13 @@ public class DefaultEncryptionServivceImpl implements EncryptionService {
   public static String encrypt(String value)
       throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException,
           IllegalBlockSizeException, BadPaddingException {
-
-	  String eValue = value;
-	  if (null != c) {
-		  String valueToEnc = null;
-		    for (int i = 0; i < ITERATIONS; i++) {
-		      valueToEnc = encryption_key + eValue;
-		      byte[] encValue = c.doFinal(valueToEnc.getBytes());
-		      eValue = new sun.misc.BASE64Encoder().encode(encValue);
-		    }
-	  }
+    String valueToEnc = null;
+    String eValue = value;
+    for (int i = 0; i < ITERATIONS; i++) {
+      valueToEnc = encryption_key + eValue;
+      byte[] encValue = c.doFinal(valueToEnc.getBytes());
+      eValue = new sun.misc.BASE64Encoder().encode(encValue);
+    }
     return eValue;
   }
 

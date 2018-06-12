@@ -20,18 +20,17 @@ public class DefaultDecryptionServiceImpl implements DecryptionService {
 
   private String sunbirdEncryption = "";
   
-  private static Cipher c = null;
+  private static Cipher c;
   
   static {
-	  sunbird_encryption = DefaultEncryptionServivceImpl.getSalt();
-      Key key = generateKey();
-	    try {
-	    	Cipher c = Cipher.getInstance(ALGORITHM);
-	        c.init(Cipher.DECRYPT_MODE, key);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	  try {
+		  sunbird_encryption = DefaultEncryptionServivceImpl.getSalt();
+	      Key key = generateKey();
+	      c = Cipher.getInstance(ALGORITHM);
+	      c.init(Cipher.DECRYPT_MODE, key);
+	  } catch (Exception e) {
+		  ProjectLogger.log(e.getMessage(), e);
+	  }
   }
 
   public DefaultDecryptionServiceImpl() {
@@ -96,21 +95,19 @@ public class DefaultDecryptionServiceImpl implements DecryptionService {
    * @return decrypted password.
    */
   public static String decrypt(String value) {
-	  if (null != c) {
-		  try {
-		      String dValue = null;
-		      String valueToDecrypt = value.trim();
-		      for (int i = 0; i < ITERATIONS; i++) {
-		        byte[] decordedValue = new sun.misc.BASE64Decoder().decodeBuffer(valueToDecrypt);
-		        byte[] decValue = c.doFinal(decordedValue);
-		        dValue = new String(decValue).substring(sunbird_encryption.length());
-		        valueToDecrypt = dValue;
-		      }
-		      return dValue;
-		    } catch (Exception ex) {
-		      ProjectLogger.log("Exception Occurred while decrypting value");
-		    }
-	  }
+    try {
+      String dValue = null;
+      String valueToDecrypt = value.trim();
+      for (int i = 0; i < ITERATIONS; i++) {
+        byte[] decordedValue = new sun.misc.BASE64Decoder().decodeBuffer(valueToDecrypt);
+        byte[] decValue = c.doFinal(decordedValue);
+        dValue = new String(decValue).substring(sunbird_encryption.length());
+        valueToDecrypt = dValue;
+      }
+      return dValue;
+    } catch (Exception ex) {
+      ProjectLogger.log("Exception Occurred while decrypting value");
+    }
     return value;
   }
 
