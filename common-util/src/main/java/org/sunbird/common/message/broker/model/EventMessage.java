@@ -8,6 +8,7 @@ public class EventMessage {
   private String eventType;
   private Map<String, Object> message;
   private String operationOn;
+  private String identifier;
 
   public EventMessage(
       String operationType, String eventType, Map<String, Object> message, String operationOn) {
@@ -48,5 +49,21 @@ public class EventMessage {
 
   public void setMessage(Map<String, Object> message) {
     this.message = message;
+  }
+
+  public String getOperationType() {
+    return operationType;
+  }
+
+  public void setOperationType(String operationType) {
+    this.operationType = operationType;
+  }
+
+  public String getIdentifier() {
+    return identifier;
+  }
+
+  public void setIdentifier(String identifier) {
+    this.identifier = identifier;
   }
 }

@@ -32,7 +32,7 @@ import org.sunbird.cassandra.CassandraOperation;
 import org.sunbird.common.CassandraUtil;
 import org.sunbird.common.Constants;
 import org.sunbird.common.exception.ProjectCommonException;
-import org.sunbird.common.message.event.sender.GenrateAndSendEventUtil;
+import org.sunbird.common.message.event.sender.GenerateAndSendEventUtil;
 import org.sunbird.common.models.response.Response;
 import org.sunbird.common.models.util.JsonKey;
 import org.sunbird.common.models.util.LoggerEnum;
@@ -74,7 +74,7 @@ public class CassandraOperationImpl implements CassandraOperation {
       }
       connectionManager.getSession(keyspaceName).execute(boundStatement.bind(array));
       response.put(Constants.RESPONSE, Constants.SUCCESS);
-      GenrateAndSendEventUtil.generateAndSendEvent(
+      GenerateAndSendEventUtil.generateAndSendEvent(
           JsonKey.INSERT, tableName, request, JsonKey.DATABASE_OPERATION);
     } catch (Exception e) {
       if (e.getMessage().contains(JsonKey.UNKNOWN_IDENTIFIER)
@@ -122,7 +122,7 @@ public class CassandraOperationImpl implements CassandraOperation {
       BoundStatement boundStatement = statement.bind(array);
       connectionManager.getSession(keyspaceName).execute(boundStatement);
       response.put(Constants.RESPONSE, Constants.SUCCESS);
-      GenrateAndSendEventUtil.generateAndSendEvent(
+      GenerateAndSendEventUtil.generateAndSendEvent(
           JsonKey.UPDATE, tableName, request, JsonKey.DATABASE_OPERATION);
     } catch (Exception e) {
       if (e.getMessage().contains(JsonKey.UNKNOWN_IDENTIFIER)) {
@@ -157,7 +157,7 @@ public class CassandraOperationImpl implements CassandraOperation {
       response.put(Constants.RESPONSE, Constants.SUCCESS);
       Map<String, Object> request = new HashMap<>();
       request.put(JsonKey.IDENTIFIER, identifier);
-      GenrateAndSendEventUtil.generateAndSendEvent(
+      GenerateAndSendEventUtil.generateAndSendEvent(
           JsonKey.DELETE, tableName, request, JsonKey.DATABASE_OPERATION);
     } catch (Exception e) {
       ProjectLogger.log(Constants.EXCEPTION_MSG_DELETE + tableName + " : " + e.getMessage(), e);
@@ -370,7 +370,7 @@ public class CassandraOperationImpl implements CassandraOperation {
       }
       connectionManager.getSession(keyspaceName).execute(boundStatement.bind(array));
       response.put(Constants.RESPONSE, Constants.SUCCESS);
-      GenrateAndSendEventUtil.generateAndSendEvent(
+      GenerateAndSendEventUtil.generateAndSendEvent(
           JsonKey.UPDATE, tableName, request, JsonKey.DATABASE_OPERATION);
 
     } catch (Exception e) {
@@ -423,7 +423,7 @@ public class CassandraOperationImpl implements CassandraOperation {
               });
       Statement updateQuery = where;
       session.execute(updateQuery);
-      GenrateAndSendEventUtil.generateAndSendEvent(
+      GenerateAndSendEventUtil.generateAndSendEvent(
           JsonKey.UPDATE, tableName, request, JsonKey.DATABASE_OPERATION);
     } catch (Exception e) {
       ProjectLogger.log(Constants.EXCEPTION_MSG_UPDATE + tableName + " : " + e.getMessage(), e);
@@ -639,7 +639,7 @@ public class CassandraOperationImpl implements CassandraOperation {
       connectionManager.getSession(keyspaceName).execute(delete);
       Map<String, Object> requestData = new HashMap<>();
       requestData.putAll(compositeKeyMap);
-      GenrateAndSendEventUtil.generateAndSendEvent(
+      GenerateAndSendEventUtil.generateAndSendEvent(
           JsonKey.DELETE, tableName, requestData, JsonKey.DATABASE_OPERATION);
     } catch (Exception e) {
       ProjectLogger.log(
@@ -669,7 +669,7 @@ public class CassandraOperationImpl implements CassandraOperation {
       Clause clause = QueryBuilder.in(JsonKey.ID, identifierList);
       deleteWhere.and(clause);
       resultSet = connectionManager.getSession(keyspaceName).execute(delete);
-      GenrateAndSendEventUtil.generateAndSendEvent(
+      GenerateAndSendEventUtil.generateAndSendEvent(
           JsonKey.DELETE, tableName, identifierList, JsonKey.DATABASE_OPERATION);
     } catch (Exception e) {
       ProjectLogger.log(

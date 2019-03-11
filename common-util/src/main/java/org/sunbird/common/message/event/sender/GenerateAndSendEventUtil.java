@@ -10,14 +10,14 @@ import org.sunbird.common.models.util.JsonKey;
 import org.sunbird.common.models.util.LoggerEnum;
 import org.sunbird.common.models.util.ProjectLogger;
 
-public class GenrateAndSendEventUtil {
+public class GenerateAndSendEventUtil {
   private static MessageBroker messageBroker = MessageBrokerFactory.getInstance();
 
   public static void generateAndSendEvent(
       String operationType, String operationOn, Map<String, Object> requestData, String topic) {
     // topic = Database_operation
     ProjectLogger.log(
-        " *GenrateAndSendEventUtil: Genrate and Send Called :" + topic, LoggerEnum.INFO);
+        " GenerateAndSendEventUtil: Generate and Send Called :" + topic, LoggerEnum.INFO);
     String eventType = JsonKey.INFORMATIONAL;
     if (topic.equals(JsonKey.DATABASE_OPERATION)) {
       eventType = JsonKey.TRANSACTIONAL;
@@ -33,7 +33,7 @@ public class GenrateAndSendEventUtil {
   public static void generateAndSendEvent(
       String operationType, String operationOn, List<String> requestData, String topic) {
     ProjectLogger.log(
-        "GenrateAndSendEventUtil : Genrate and Send Called :" + topic, LoggerEnum.INFO);
+        "GenerateAndSendEventUtil : Generate and Send Called :" + topic, LoggerEnum.INFO);
     // topic = Database_operation
     String eventType = JsonKey.INFORMATIONAL;
     if (topic.equals(JsonKey.DATABASE_OPERATION)) {
@@ -49,7 +49,7 @@ public class GenrateAndSendEventUtil {
       messageBroker.send(topic, message);
     } catch (Exception e) {
       ProjectLogger.log(
-          "GenrateAndSendEventUtil : Error while processing message", LoggerEnum.INFO);
+          "GenerateAndSendEventUtil : Error while processing message", LoggerEnum.INFO);
     }
   }
 }
