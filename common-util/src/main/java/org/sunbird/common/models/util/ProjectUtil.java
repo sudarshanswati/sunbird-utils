@@ -500,21 +500,6 @@ public class ProjectUtil {
   }
 
   /** @author Manzarul */
-  public enum EnrolmentType {
-    open("open"),
-    inviteOnly("invite-only");
-    private String val;
-
-    EnrolmentType(String val) {
-      this.val = val;
-    }
-
-    public String getVal() {
-      return val;
-    }
-  }
-
-  /** @author Manzarul */
   public enum AzureContainer {
     userProfileImg("userprofileimg"),
     orgImage("orgimg");

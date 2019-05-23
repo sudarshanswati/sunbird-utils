@@ -17,7 +17,6 @@
     <module>actor-core</module>
     <module>kafka-client</module>
     <module>extensions</module>
-    <module>content-util</module>
     <module>cache-util</module>
   </modules>
 </project>
