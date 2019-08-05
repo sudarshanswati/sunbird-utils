@@ -133,4 +133,15 @@ public interface SSOManager {
   void setRequiredAction(String userId, String requiredAction);
 
   String getUsernameById(String userId);
+  
+  	/**
+	 * This method will add user current login time to keycloak.
+	 * 
+	 * @param userId
+	 * @param userLoginTime
+	 * @return
+	 * @author Tapojit Bhattacharya 
+	 */
+  boolean addUserLoginTime(String userId, String userLoginTime);
+
 }
