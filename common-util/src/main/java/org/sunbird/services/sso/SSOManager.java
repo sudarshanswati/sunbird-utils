@@ -141,6 +141,7 @@ public interface SSOManager {
 	 * @param userLoginTime
 	 * @return
 	 * @author Tapojit Bhattacharya 
+	 *
 	 */
   boolean addUserLoginTime(String userId, String userLoginTime);
 
