@@ -722,4 +722,40 @@ public class KeyCloakServiceImpl implements SSOManager {
         LoggerEnum.INFO.name());
     return "";
   }
+  
+  	/**
+	 * @author Tapojit Bhattacharya 
+	 */
+	@Override
+	public boolean addUserLoginTime(String userId, String userLoginTime) {
+		boolean response = true;
+		try {
+			//String fedUserId = getFederatedUserId(userId);
+			UserResource resource = keycloak.realm(KeyCloakConnectionProvider.SSO_REALM).users().get(userId);
+			UserRepresentation ur = resource.toRepresentation();
+			Map<String, List<String>> map = ur.getAttributes();
+			List<String> list = new ArrayList<>();
+			if (map == null) {
+				map = new HashMap<>();
+			}
+			List<String> currentLogTime = map.get(JsonKey.CURRENT_LOGIN_TIME);
+			if (currentLogTime == null || currentLogTime.isEmpty()) {
+				currentLogTime = new ArrayList<>();
+				currentLogTime.add(userLoginTime);
+			} else {
+				list.add(currentLogTime.get(0));
+				currentLogTime.clear();
+				currentLogTime.add(0, userLoginTime);
+			}
+			map.put(JsonKey.CURRENT_LOGIN_TIME, currentLogTime);
+			map.put(JsonKey.LAST_LOGIN_TIME, list);
+			ur.setAttributes(map);
+			resource.update(ur);
+		} catch (Exception e) {
+			ProjectLogger.log(e.getMessage(), e);
+			response = false;
+		}
+		return response;
+	}
+
 }
