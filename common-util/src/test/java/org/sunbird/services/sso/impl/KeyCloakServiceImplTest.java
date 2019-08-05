@@ -358,4 +358,15 @@ public class KeyCloakServiceImplTest extends BaseHttpTest {
     boolean response = keyCloakService.doPasswordUpdate(userId.get(JsonKey.USER_ID), "password");
     Assert.assertEquals(true, response);
   }
+  
+  	/**
+	 * @author Tapojit Bhattacharya
+	 */
+	@Test
+	public void testAddUserLoginTimeOverloadedSuccess() {
+		String userLoginTime = Long.toString(System.currentTimeMillis());
+		boolean response = keyCloakService.addUserLoginTime(userId.get(JsonKey.USER_ID), userLoginTime);
+		Assert.assertEquals(true, response);
+	}
+
 }
